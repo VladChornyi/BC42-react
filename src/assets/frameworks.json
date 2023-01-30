@@ -1,0 +1,14 @@
+[{
+    "id": 1,
+    "name": "React",
+    "difficult": "normal"
+},
+{
+    "id": 2,
+    "name": "Angular",
+    "difficult": "hard"
+},{
+    "id": 3,
+    "name": "Vue",
+    "difficult": "easy"
+}]
