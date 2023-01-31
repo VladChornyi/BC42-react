@@ -1,14 +1,26 @@
-[{
+[
+  {
     "id": 1,
     "name": "React",
-    "difficult": "normal"
-},
-{
+    "difficult": "normal",
+    "learned": true
+  },
+  {
     "id": 2,
     "name": "Angular",
-    "difficult": "hard"
-},{
+    "difficult": "hard",
+    "learned": false
+  },
+  {
     "id": 3,
     "name": "Vue",
-    "difficult": "easy"
-}]
+    "difficult": "easy",
+    "learned": false
+  },
+  {
+    "id": 4,
+    "name": "X",
+    "difficult": "SuperHard",
+    "learned": true
+  }
+]

@@ -1,0 +1,10 @@
+.item {
+  font-size: 25px;
+  background-color: blueviolet;
+  color: bisque;
+}
+
+.learned {
+  composes: item;
+  color: tomato;
+}
