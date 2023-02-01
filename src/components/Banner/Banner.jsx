@@ -10,20 +10,48 @@ import { BannerModal } from "./BannerModal";
 const TEXT =
   "Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.";
 
-export const Banner = () => {
-  return (
-    <>
-      <div className="row mb-5 p-5 row-cols-2 bg-light">
-        <BannerItem title="Featured title" text={TEXT} onOpenModal={() => {}}>
-          <IoCashOutline />
-        </BannerItem>
-      </div>
-      <Modal>
-        <BannerModal />
-      </Modal>
-    </>
-  );
-};
+export class Banner extends Component {
+  state = {
+    isOpenModal: false,
+    counter: 0,
+    text: "",
+  };
+
+  handleOpenModal = () => {
+    this.setState({ isOpenModal: true, counter: this.state.counter + 1 });
+  };
+
+  handleCloseModal = () => {
+    this.setState({ isOpenModal: false });
+  };
+
+  handleToggleModal = () => {
+    this.setState((prevState) => {
+      return { isOpenModal: !prevState.isOpenModal };
+    });
+  };
+
+  render() {
+    return (
+      <>
+        <div className="row mb-5 p-5 row-cols-2 bg-light">
+          <BannerItem
+            title="Featured title"
+            text={TEXT}
+            onOpenModal={this.handleOpenModal}
+          >
+            <IoCashOutline />
+          </BannerItem>
+        </div>
+        {this.state.isOpenModal && (
+          <Modal onCloseModal={this.handleToggleModal}>
+            <BannerModal />
+          </Modal>
+        )}
+      </>
+    );
+  }
+}
 
 // export const Banner = () => {
 //   return (

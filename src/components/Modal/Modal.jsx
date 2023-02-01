@@ -1,11 +1,21 @@
 import { PropTypes } from "prop-types";
 
 export const Modal = ({ children, title = "My modal", onCloseModal }) => {
+  const handleBackdropClick = ({ target, currentTarget }) => {
+    if (target === currentTarget) {
+      onCloseModal();
+    }
+  };
+
   return (
     <>
       <div className="modal-backdrop fade show" />
 
-      <div className="modal fade show" style={{ display: "block" }}>
+      <div
+        onClick={handleBackdropClick}
+        className="modal fade show"
+        style={{ display: "block" }}
+      >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">

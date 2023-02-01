@@ -1,11 +1,11 @@
-import { PropTypes } from 'prop-types';
+import { PropTypes } from "prop-types";
 
 export const BannerItem = ({ title, text, children, onOpenModal }) => {
   return (
     <div className="feature col">
       <div
         className="d-flex rounded justify-content-center align-items-center mb-4 text-white bg-primary bg-gradient"
-        style={{ width: '70px', height: '70px', fontSize: '30px' }}
+        style={{ width: "70px", height: "70px", fontSize: "30px" }}
       >
         {children}
       </div>
