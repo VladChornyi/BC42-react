@@ -14,7 +14,7 @@ export class Banner extends Component {
   state = {
     isOpenModal: false,
     counter: 0,
-    text: "",
+    text: this.props.test,
   };
 
   handleOpenModal = () => {
@@ -32,6 +32,7 @@ export class Banner extends Component {
   };
 
   render() {
+    console.log("this.props", this.props);
     return (
       <>
         <div className="row mb-5 p-5 row-cols-2 bg-light">
