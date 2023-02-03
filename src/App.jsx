@@ -4,6 +4,7 @@ import { Header, Layout } from "./components/Layout";
 import { Skills } from "./components/Skills/Skills";
 import { skillsList } from "./config";
 import { LoginForm } from "./components/LoginForm/LoginForm";
+import Filmoteka from "./components/Filmoteka/Filmoteka";
 // import { UsersList } from "./components/Users";
 
 export const App = () => {
@@ -13,8 +14,9 @@ export const App = () => {
       {/* <Counter /> */}
       {/* <Banner test="test" /> */}
       {/* <UsersList /> */}
-      <br />
-      <LoginForm list={skillsList} />
+      {/* <br /> */}
+      {/* <LoginForm list={skillsList} /> */}
+      <Filmoteka />
     </Layout>
   );
 };

@@ -1,6 +1,6 @@
-import { PropTypes } from 'prop-types';
+import { PropTypes } from "prop-types";
 
-export const Header = ({ title }) => {
+export const Header = ({ title = "Hello" }) => {
   return (
     <header className="pb-4">
       <h1>{title}</h1>
