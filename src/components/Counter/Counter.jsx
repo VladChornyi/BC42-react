@@ -13,9 +13,9 @@ export class Counter extends Component {
   //   };
   // }
   state = {
-    // value: 0,
+    value: 0,
     ios: 0,
-    android: 1,
+    android: 0,
   };
 
   handleIncrement = () => {
@@ -49,9 +49,9 @@ export class Counter extends Component {
     return (
       <div className="mb-5 p-5 text-white bg-dark rounded-3">
         <h2 className="text-center">Counter</h2>
-        {/* <p className="text-center my-5" style={{ fontSize: 80 }}>
+        <p className="text-center my-5" style={{ fontSize: 80 }}>
           {this.state.value}
-        </p> */}
+        </p>
         <p className="text-center my-5" style={{ fontSize: 80 }}>
           IOS: {this.state.ios}
         </p>
@@ -76,7 +76,7 @@ export class Counter extends Component {
           >
             Vote Android
           </button>
-          {/* <button
+          <button
             onClick={this.handleIncrement}
             className="btn p-3 btn-outline-light w-25 mx-2"
             type="button"
@@ -89,7 +89,7 @@ export class Counter extends Component {
             type="button"
           >
             Minus
-          </button> */}
+          </button>
         </div>
       </div>
     );
