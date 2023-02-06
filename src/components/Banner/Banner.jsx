@@ -3,6 +3,7 @@ import { Component } from "react";
 import { IoCashOutline } from "react-icons/io5";
 
 import { Modal } from "../Modal";
+import { Timer } from "../Timer/Timer";
 
 import { BannerItem } from "./BannerItem";
 import { BannerModal } from "./BannerModal";
@@ -32,7 +33,6 @@ export class Banner extends Component {
   };
 
   render() {
-    console.log("this.props", this.props);
     return (
       <>
         <div className="row mb-5 p-5 row-cols-2 bg-light">
@@ -46,7 +46,7 @@ export class Banner extends Component {
         </div>
         {this.state.isOpenModal && (
           <Modal onCloseModal={this.handleToggleModal}>
-            <BannerModal />
+            <Timer />
           </Modal>
         )}
       </>

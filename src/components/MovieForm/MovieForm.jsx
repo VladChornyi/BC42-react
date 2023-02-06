@@ -11,7 +11,6 @@ const INITIAL_STATE = {
   views: "",
 };
 
-console.log("Input :>> ", Input);
 class MovieForm extends Component {
   state = {
     ...INITIAL_STATE,
@@ -55,7 +54,9 @@ class MovieForm extends Component {
             Choose ganre
           </option>
           {genres.map((item) => (
-            <option value={item}>{item}</option>
+            <option key={item} value={item}>
+              {item}
+            </option>
           ))}
         </Select>
         <Input
@@ -67,7 +68,11 @@ class MovieForm extends Component {
           type="number"
           value={views}
         />
-        <button className="btn btn-primary" type="submit">
+        <button
+          className="btn btn-primary"
+          style={{ width: "150px" }}
+          type="submit"
+        >
           ADD FILM
         </button>
       </Form>

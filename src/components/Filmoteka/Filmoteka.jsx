@@ -5,11 +5,34 @@ import FilmList from "../FilmList/FilmList";
 import GenresSelect from "../GenresSelect/GenresSelect";
 import MovieForm from "../MovieForm/MovieForm";
 
+const LOCAL_FILMS_KEY = "filmListKey";
+
 class Filmoteka extends Component {
   state = {
     filmList: [],
     genre: "All",
   };
+
+  componentDidMount() {
+    const savedFilmList = JSON.parse(localStorage.getItem(LOCAL_FILMS_KEY));
+    if (savedFilmList) {
+      this.setState({ filmList: savedFilmList });
+    }
+  }
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    return window.scrollY;
+  }
+
+  componentDidUpdate(_, prevState, snapshot) {
+    if (prevState.filmList.length !== this.state.filmList.length) {
+      localStorage.setItem(
+        LOCAL_FILMS_KEY,
+        JSON.stringify(this.state.filmList)
+      );
+      window.scrollTo({ top: snapshot + 500, behavior: "smooth" });
+    }
+  }
 
   handleChangeGenre = (event) => {
     const { value } = event.target;
@@ -46,7 +69,6 @@ class Filmoteka extends Component {
   };
 
   render() {
-    const { filmList } = this.state;
     return (
       <div>
         <h2>Filmoteka </h2>
@@ -64,7 +86,5 @@ class Filmoteka extends Component {
     );
   }
 }
-
-Filmoteka.propTypes = {};
 
 export default Filmoteka;

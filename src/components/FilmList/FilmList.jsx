@@ -26,17 +26,17 @@ FilmList.defaultProps = {
   filmList: [],
 };
 
-FilmList.propTypes = {
-  onDeleteFilm: PropTypes.func.isRequired,
-  filmList: PropTypes.arrayOf(
-    PropTypes.exact({
-      id: PropTypes.string.isRequired,
-      filmName: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-      ganre: PropTypes.string.isRequired,
-      views: PropTypes.string.isRequired,
-    })
-  ),
-};
+// FilmList.propTypes = {
+//   onDeleteFilm: PropTypes.func.isRequired,
+//   filmList: PropTypes.arrayOf(
+//     PropTypes.exact({
+//       id: PropTypes.string.isRequired,
+//       filmName: PropTypes.string.isRequired,
+//       url: PropTypes.string.isRequired,
+//       ganre: PropTypes.string.isRequired,
+//       views: PropTypes.string.isRequired,
+//     })
+//   ),
+// };
 
 export default FilmList;
