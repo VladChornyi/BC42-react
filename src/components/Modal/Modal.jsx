@@ -1,65 +1,65 @@
-import { Component } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { PropTypes } from "prop-types";
 
-export class Modal extends Component {
-  componentDidMount() {
-    window.addEventListener("keydown", this.handleEscClose);
-  }
+export const Modal = ({ title, onCloseModal, children }) => {
+  const countRef = useRef({ value: 0 });
+  const [value, setValue] = useState(countRef.current.value);
 
-  componentDidUpdate() {
-    console.log("Did update");
-  }
+  useEffect(() => {
+    const handleEscClose = (e) => {
+      if (e.code === "Escape") {
+        onCloseModal();
+      }
+    };
+    window.addEventListener("keydown", handleEscClose);
+    return () => {
+      window.removeEventListener("keydown", handleEscClose);
+    };
+  }, [onCloseModal]);
 
-  componentWillUnmount() {
-    window.removeEventListener("keydown", this.handleEscClose);
-  }
-
-  handleEscClose = (e) => {
-    if (e.code === "Escape") {
-      this.props.onCloseModal();
-    }
+  const count = () => {
+    countRef.current.value += 1;
   };
-
-  handleBackdropClick = ({ target, currentTarget }) => {
+  const handleBackdropClick = ({ target, currentTarget }) => {
     if (target === currentTarget) {
-      this.props.onCloseModal();
+      onCloseModal();
     }
   };
+  const template = (
+    <>
+      <div className="modal-backdrop fade show" />
 
-  render() {
-    const { title, onCloseModal, children } = this.props;
-    const template = (
-      <>
-        <div className="modal-backdrop fade show" />
-
-        <div
-          onClick={this.handleBackdropClick}
-          className="modal fade show"
-          style={{ display: "block" }}
-        >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">{title}</h5>
-
-                <button
-                  type="button"
-                  className="btn-close"
-                  aria-label="Close"
-                  onClick={onCloseModal}
-                />
-              </div>
-
-              <div className="modal-body">{children}</div>
+      <div
+        onClick={handleBackdropClick}
+        className="modal fade show"
+        style={{ display: "block" }}
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">{title}</h5>
+              <button onClick={count}>plus</button>
+              <button onClick={() => setValue(countRef.current.value)}>
+                update
+              </button>
+              <button
+                type="button"
+                className="btn-close"
+                aria-label="Close"
+                onClick={onCloseModal}
+              />
             </div>
+            <p>{countRef.current.value}</p>
+
+            <div className="modal-body">{children}</div>
           </div>
         </div>
-      </>
-    );
-    return createPortal(template, document.getElementById("modal"));
-  }
-}
+      </div>
+    </>
+  );
+  return createPortal(template, document.getElementById("modal"));
+};
 
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
