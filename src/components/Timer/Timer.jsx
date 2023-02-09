@@ -1,36 +1,66 @@
-import { Component } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { Button } from "../Button/Button";
 
 const INTERVAL = 1000;
 
-export class Timer extends Component {
-  state = { date: new Date() };
+export const Timer = () => {
+  const [date, setDate] = useState(new Date());
+  const [state, setState] = useState(0);
+  const testRef = useRef(0);
+  const intervalRef = useRef(null);
+  const textRef = useRef(null);
+  const data = useContext(AuthContext);
+  console.log(data);
 
-  intervalId = null;
+  useEffect(() => {
+    console.log("render ");
+  });
 
-  componentDidMount() {
-    this.intervalId = setInterval(() => {
-      this.setState({ date: new Date() });
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      setDate(new Date());
     }, INTERVAL);
-  }
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, []);
 
-  componentWillUnmount() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
+  const handleStopTimer = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+      textRef.current.style.color = "red";
     }
-  }
+  };
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
 
-  render() {
-    const hours = String(this.state.date.getHours()).padStart(2, "0");
-    const minutes = String(this.state.date.getMinutes()).padStart(2, "0");
-    const seconds = String(this.state.date.getSeconds()).padStart(2, "0");
-
-    return (
-      <div className="mb-5 p-5 text-white bg-dark rounded-3">
-        <h2 className="text-center">Timer</h2>
-        <p className="text-center my-5" style={{ fontSize: 80 }}>
-          {`${hours}:${minutes}:${seconds}`}
-        </p>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="mb-5 p-5 text-white bg-dark rounded-3">
+      <h2 className="text-center">Timer</h2>
+      <p ref={textRef} className="text-center my-5" style={{ fontSize: 80 }}>
+        {`${hours}:${minutes}:${seconds}`}
+      </p>
+      <Button onClick={handleStopTimer}>Stop timer</Button>
+      <Button
+        onClick={() => {
+          setState((prev) => prev + 1);
+        }}
+      >
+        State
+      </Button>
+      <Button
+        onClick={() => {
+          testRef.current += 1;
+        }}
+      >
+        Ref
+      </Button>
+    </div>
+  );
+};
