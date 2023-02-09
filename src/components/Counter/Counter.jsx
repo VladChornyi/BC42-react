@@ -1,41 +1,54 @@
-import { Component } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const mobilePhones = [
   { title: "iPhone", name: "iphone" },
   { title: "Android", name: "android" },
 ];
 
-export class Counter extends Component {
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     value: 0,
-  //   };
-  // }
-  state = {
-    value: 0,
-    ios: 0,
-    android: 0,
+export const Counter = () => {
+  const [counter, setCounter] = useState(1);
+  const [ios, setIos] = useState(0);
+  const [android, setAndroid] = useState(0);
+
+  // const getResult = () => {
+  //   console.log("calculate");
+  //   let result = 0;
+  //   for (let i = 0; i < 100000000; i++) {
+  //     result += 1;
+  //   }
+  //   return result;
+  // };
+
+  const result = useMemo(() => {
+    console.log("calculate");
+    let result = 0;
+    for (let i = 0; i < 200000000; i++) {
+      result += counter;
+    }
+    return result;
+  }, [counter]);
+
+  const getResult = () => {
+    console.log("calculate");
+    let result = 0;
+    for (let i = 0; i < 200000000; i++) {
+      result += counter;
+    }
+    return result;
   };
 
-  handleIncrement = () => {
-    this.setState((prevState) => {
-      return { value: prevState.value + 1 };
-    });
-  };
-
-  handleDecrement = () => {
-    this.setState((prevState) => {
-      if (prevState.value > 0) {
-        return { value: prevState.value - 1 };
-      }
-      return;
-    });
-  };
-
-  handleVotePhone = (e) => {
+  const handleVotePhone = (e) => {
     const { name } = e.target;
-    this.setState((prevState) => ({ [name]: prevState[name] + 1 }));
+    switch (name) {
+      case "ios":
+        setIos((prev) => prev + 1);
+        break;
+      case "android":
+        setAndroid((prev) => prev + 1);
+        break;
+      default:
+        return;
+    }
   };
 
   // handleVoteAndroid = () => {
@@ -45,53 +58,47 @@ export class Counter extends Component {
   //   this.setState((prevState) => ({ ios: prevState.ios + 1 }));
   // };
 
-  render() {
-    return (
-      <div className="mb-5 p-5 text-white bg-dark rounded-3">
-        <h2 className="text-center">Counter</h2>
-        <p className="text-center my-5" style={{ fontSize: 80 }}>
-          {this.state.value}
-        </p>
-        <p className="text-center my-5" style={{ fontSize: 80 }}>
-          IOS: {this.state.ios}
-        </p>
-        <p className="text-center my-5" style={{ fontSize: 80 }}>
-          Android: {this.state.android}
-        </p>
+  return (
+    <div className="mb-5 p-5 text-white bg-dark rounded-3">
+      <h2 className="text-center">Counter</h2>
+      <p className="text-center my-5" style={{ fontSize: 80 }}>
+        Count: {result}
+      </p>
+      <p className="text-center my-5" style={{ fontSize: 80 }}>
+        IOS: {ios}
+      </p>
+      <p className="text-center my-5" style={{ fontSize: 80 }}>
+        Android: {android}
+      </p>
 
-        <div className="d-flex align-items-center justify-content-center w-100">
-          <button
-            name="ios"
-            onClick={this.handleVotePhone}
-            className="btn p-3 btn-outline-light w-25 mx-2"
-            type="button"
-          >
-            Vote IOS
-          </button>
-          <button
-            name="android"
-            onClick={this.handleVotePhone}
-            className="btn p-3 btn-outline-light w-25 mx-2"
-            type="button"
-          >
-            Vote Android
-          </button>
-          <button
-            onClick={this.handleIncrement}
-            className="btn p-3 btn-outline-light w-25 mx-2"
-            type="button"
-          >
-            Plus
-          </button>
-          <button
-            onClick={this.handleDecrement}
-            className="btn p-3 btn-outline-light w-25 mx-2"
-            type="button"
-          >
-            Minus
-          </button>
-        </div>
+      <div className="d-flex align-items-center justify-content-center w-100">
+        <button
+          name="counter"
+          onClick={() => {
+            setCounter((prev) => prev + 1);
+          }}
+          className="btn p-3 btn-outline-light w-25 mx-2"
+          type="button"
+        >
+          +1
+        </button>
+        <button
+          name="ios"
+          onClick={handleVotePhone}
+          className="btn p-3 btn-outline-light w-25 mx-2"
+          type="button"
+        >
+          Vote IOS
+        </button>
+        <button
+          name="android"
+          onClick={handleVotePhone}
+          className="btn p-3 btn-outline-light w-25 mx-2"
+          type="button"
+        >
+          Vote Android
+        </button>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};

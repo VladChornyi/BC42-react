@@ -1,5 +1,6 @@
 import { PropTypes } from "prop-types";
 import { ConfettiContainer } from "../Service";
+import { Login } from "./Login";
 
 import { Sidebar } from "./Sidebar/Sidebar";
 
