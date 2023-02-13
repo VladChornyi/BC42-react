@@ -9,6 +9,8 @@ import { Memo } from "./components/Memo/Memo";
 import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import { UsersList } from "./components/UsersList/UsersList";
+import { PostsPage } from "./pages/PostsPage/PostsPage";
+import SinglePostPage from "./pages/SinglePostPage/SinglePostPage";
 // import { Posts } from "./components/Posts/Posts";
 
 export const App = () => {
@@ -17,6 +19,8 @@ export const App = () => {
       <AuthProvider>
         <Layout>
           <Header title="Bootcamp-42" />
+          {/* <PostsPage /> */}
+          {/* <SinglePostPage /> */}
           {/* <UsersList /> */}
           {/* <Rerender /> */}
           {/* <Test text={"Text"}>
@@ -27,7 +31,7 @@ export const App = () => {
           {/* <Counter /> */}
           {/* <Banner /> */}
           {/* <Posts /> */}
-          <Filmoteka />
+          {/* <Filmoteka /> */}
         </Layout>
       </AuthProvider>
     </ThemeProvider>
