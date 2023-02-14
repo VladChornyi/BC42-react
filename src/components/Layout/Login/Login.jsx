@@ -1,11 +1,14 @@
 import { useContext, useState } from "react";
 
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
 import { Button } from "../../Button/Button";
 import { confetti } from "../../Service/Confetti";
 
 export const Login = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
   const [username, setUsername] = useState("");
@@ -33,6 +36,7 @@ export const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     login(username, password);
+    navigate(location.state?.from ?? "/");
   };
 
   return (

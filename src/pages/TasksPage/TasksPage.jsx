@@ -1,6 +1,12 @@
-import { Link, Outlet } from "react-router-dom";
+import { Suspense, useContext } from "react";
+import { Link, Navigate, Outlet } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 const TasksPage = () => {
+  const { isAuth } = useContext(AuthContext);
+  if (!isAuth) {
+    return <Navigate to="/" />;
+  }
   return (
     <>
       <ul className="nav nav-tabs">
@@ -29,7 +35,9 @@ const TasksPage = () => {
           </Link>
         </li>
       </ul>
-      <Outlet />
+      <Suspense fallback={<p>Loading tasks...</p>}>
+        <Outlet />
+      </Suspense>
     </>
   );
 };

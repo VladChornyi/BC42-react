@@ -9,16 +9,21 @@ import { PostsError } from "./PostsErorr";
 import { PostsItem } from "./PostsItem";
 import { PostsLoader } from "./PostsLoader";
 import { SearchPosts } from "./SearchPosts";
-import { Navigate } from "react-router";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 // const LOCAL_KEY = 'state';
 // const initial = { page: 1, isLoading: false };
 
 export const PostsPage = () => {
+  const location = useLocation();
+  console.log(location);
+  const [params] = useSearchParams();
+  const search = params.get("search");
+
   const [posts, setPosts] = useState(null);
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState(FETCH_STATUS.idle);
-  const [search, setSearch] = useState("");
+  // const [search, setSearch] = useState("");
 
   // const [state, setState] = useState(...initial);
 
@@ -59,10 +64,6 @@ export const PostsPage = () => {
     fetchMore();
   }, [page]);
 
-  const handleSubmit = (data) => {
-    setSearch(data);
-  };
-
   const handleChangePage = () => {
     setPage((prevPage) => prevPage + 1);
   };
@@ -75,7 +76,7 @@ export const PostsPage = () => {
   }
   return (
     <>
-      <SearchPosts onSubmit={handleSubmit} />
+      <SearchPosts />
       <div className="container-fluid g-0 pb-5 mb-5">
         <div className="row">
           {posts?.data?.map((post) => (
