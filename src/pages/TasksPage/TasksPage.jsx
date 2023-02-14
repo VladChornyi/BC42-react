@@ -1,22 +1,35 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { Link, Outlet } from "react-router-dom";
 
 const TasksPage = () => {
   return (
     <>
-      <nav className="d-flex flex-row">
-        <NavLink className={({ isActive }) => (isActive ? 'btn btn-primary m-2' : 'btn btn-light m-2')} to="counter">
-          CounterPage
-        </NavLink>
-        <NavLink className={({ isActive }) => (isActive ? 'btn btn-primary m-2' : 'btn btn-light m-2')} to="skills">
-          SkillsPage
-        </NavLink>
-        <NavLink className={({ isActive }) => (isActive ? 'btn btn-primary m-2' : 'btn btn-light m-2')} to="banner">
-          BannerPage
-        </NavLink>
-      </nav>
-      <section>
-        <Outlet />
-      </section>
+      <ul className="nav nav-tabs">
+        <li className="nav-item">
+          <Link
+            className="nav-link active"
+            aria-current="page"
+            to="/tasks/banner"
+          >
+            Banner
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/tasks/counter">
+            Counter
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/tasks/filmoteka">
+            Filmoteka
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/tasks/users">
+            Users
+          </Link>
+        </li>
+      </ul>
+      <Outlet />
     </>
   );
 };

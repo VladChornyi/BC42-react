@@ -8,6 +8,10 @@ export const getUsers = async () => {
   const { data } = await usersService.get("");
   return data;
 };
+export const getUserById = async (id) => {
+  const { data } = await usersService.get(id);
+  return data;
+};
 
 export const deleteUser = async (id) => {
   const { data } = await usersService.delete(id);

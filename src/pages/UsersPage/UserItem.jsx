@@ -1,4 +1,5 @@
-import { Button } from "../Button/Button";
+import { Link } from "react-router-dom";
+import { Button } from "../../components/Button/Button";
 
 export const UsersItem = ({ user, onDelete }) => {
   return (
@@ -10,6 +11,7 @@ export const UsersItem = ({ user, onDelete }) => {
       <p>Email: ${user.email}</p>
       <p>{user.married ? "married" : "single"}</p>
       <img src={user.animalPhoto} alt="lovely animal" width="120" />
+      <Link to={`/tasks/users/${user.id}`}>Read more</Link>
       <Button onClick={() => onDelete(user.id)} type="button">
         Delete me
       </Button>

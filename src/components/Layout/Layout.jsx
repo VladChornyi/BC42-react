@@ -1,4 +1,5 @@
 import { PropTypes } from "prop-types";
+import { Outlet } from "react-router";
 import { ConfettiContainer } from "../Service";
 import { Login } from "./Login";
 
@@ -13,7 +14,9 @@ export const Layout = ({ children }) => {
         className="tab-content p-5 h-100"
         style={{ minHeight: "100vh", width: "calc(100% - 300px)" }}
       >
-        <div className="tab-pane fade show active">{children}</div>
+        <div className="tab-pane fade show active">
+          <Outlet />
+        </div>
       </main>
 
       <ConfettiContainer />

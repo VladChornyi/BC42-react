@@ -9,6 +9,7 @@ import { PostsError } from "./PostsErorr";
 import { PostsItem } from "./PostsItem";
 import { PostsLoader } from "./PostsLoader";
 import { SearchPosts } from "./SearchPosts";
+import { Navigate } from "react-router";
 
 // const LOCAL_KEY = 'state';
 // const initial = { page: 1, isLoading: false };
@@ -16,9 +17,8 @@ import { SearchPosts } from "./SearchPosts";
 export const PostsPage = () => {
   const [posts, setPosts] = useState(null);
   const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [status, setStatus] = useState(FETCH_STATUS.idle);
+  const [search, setSearch] = useState("");
 
   // const [state, setState] = useState(...initial);
 
@@ -28,7 +28,7 @@ export const PostsPage = () => {
     const fetchPosts = async () => {
       setStatus(FETCH_STATUS.loading);
       try {
-        const posts = await getPosts();
+        const posts = await getPosts({ search });
         setPosts(posts);
         setStatus(FETCH_STATUS.resolved);
       } catch (error) {
@@ -36,7 +36,7 @@ export const PostsPage = () => {
       }
     };
     fetchPosts();
-  }, []);
+  }, [search]);
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -46,22 +46,25 @@ export const PostsPage = () => {
     const fetchMore = async () => {
       setStatus(FETCH_STATUS.loading);
       try {
-        const posts = await getPosts(page);
+        const posts = await getPosts({ page });
         setPosts((prevPosts) => ({
           ...posts,
-          data: [...prevPosts.data, ...posts.data],
+          data: [...prevPosts?.data, ...posts.data],
         }));
         setStatus(FETCH_STATUS.resolved);
       } catch {
-        setError(FETCH_STATUS.rejected);
+        setStatus(FETCH_STATUS.rejected);
       }
     };
     fetchMore();
   }, [page]);
 
+  const handleSubmit = (data) => {
+    setSearch(data);
+  };
+
   const handleChangePage = () => {
     setPage((prevPage) => prevPage + 1);
-    setIsLoading(true);
   };
 
   if (status === FETCH_STATUS.loading) {
@@ -72,7 +75,7 @@ export const PostsPage = () => {
   }
   return (
     <>
-      <SearchPosts />
+      <SearchPosts onSubmit={handleSubmit} />
       <div className="container-fluid g-0 pb-5 mb-5">
         <div className="row">
           {posts?.data?.map((post) => (
