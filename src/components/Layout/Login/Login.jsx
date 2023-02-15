@@ -1,15 +1,18 @@
 import { useContext, useState } from "react";
 
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
+import { loginAction } from "../../../redux/auth/auth.actions";
 import { Button } from "../../Button/Button";
 import { confetti } from "../../Service/Confetti";
 
 export const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  // const { login } = useContext(AuthContext);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -35,8 +38,11 @@ export const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    login(username, password);
-    navigate(location.state?.from ?? "/");
+    if (password === "123") {
+      dispatch(loginAction(username));
+      // login(username, password);
+      navigate(location.state?.from ?? "/");
+    }
   };
 
   return (

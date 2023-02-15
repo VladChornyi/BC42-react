@@ -1,14 +1,21 @@
 import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
+import { logoutAction } from "../../../redux/auth/auth.actions";
 import { Button } from "../../Button/Button";
 import { Login } from "../Login";
 import css from "./Sidebar.module.css";
 import { NavLinkStyled } from "./Sidebar.styled";
 
 export const Sidebar = () => {
-  const { isAuth, logout } = useContext(AuthContext);
+  // const { isAuth, logout } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const selectIsAuth = useSelector((state) => state.auth.isAuth);
   const location = useLocation();
+  const handleLogout = () => {
+    dispatch(logoutAction());
+  };
   return (
     <aside
       className="nav nav-pills p-5 bg-light w-100"
@@ -62,15 +69,7 @@ export const Sidebar = () => {
         >
           Login
         </NavLink>
-        {isAuth && (
-          <Button
-            onClick={() => {
-              logout();
-            }}
-          >
-            Logout
-          </Button>
-        )}
+        {selectIsAuth && <Button onClick={handleLogout}>Logout</Button>}
       </div>
     </aside>
   );
