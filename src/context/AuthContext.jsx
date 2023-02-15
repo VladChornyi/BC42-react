@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { confetti } from "../components/Service/Confetti";
 import { getLocalData } from "../helpers/getLocalData";
 
@@ -31,6 +32,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setIsAuth(false);
     setName("");
+    // navigate("/", { replace: true });
   };
 
   return (

@@ -9,16 +9,21 @@ import { PostsError } from "./PostsErorr";
 import { PostsItem } from "./PostsItem";
 import { PostsLoader } from "./PostsLoader";
 import { SearchPosts } from "./SearchPosts";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 // const LOCAL_KEY = 'state';
 // const initial = { page: 1, isLoading: false };
 
 export const PostsPage = () => {
+  const location = useLocation();
+  console.log(location);
+  const [params] = useSearchParams();
+  const search = params.get("search");
+
   const [posts, setPosts] = useState(null);
   const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [status, setStatus] = useState(FETCH_STATUS.idle);
+  // const [search, setSearch] = useState("");
 
   // const [state, setState] = useState(...initial);
 
@@ -28,7 +33,7 @@ export const PostsPage = () => {
     const fetchPosts = async () => {
       setStatus(FETCH_STATUS.loading);
       try {
-        const posts = await getPosts();
+        const posts = await getPosts({ search });
         setPosts(posts);
         setStatus(FETCH_STATUS.resolved);
       } catch (error) {
@@ -36,7 +41,7 @@ export const PostsPage = () => {
       }
     };
     fetchPosts();
-  }, []);
+  }, [search]);
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -46,14 +51,14 @@ export const PostsPage = () => {
     const fetchMore = async () => {
       setStatus(FETCH_STATUS.loading);
       try {
-        const posts = await getPosts(page);
+        const posts = await getPosts({ page });
         setPosts((prevPosts) => ({
           ...posts,
-          data: [...prevPosts.data, ...posts.data],
+          data: [...prevPosts?.data, ...posts.data],
         }));
         setStatus(FETCH_STATUS.resolved);
       } catch {
-        setError(FETCH_STATUS.rejected);
+        setStatus(FETCH_STATUS.rejected);
       }
     };
     fetchMore();
@@ -61,7 +66,6 @@ export const PostsPage = () => {
 
   const handleChangePage = () => {
     setPage((prevPage) => prevPage + 1);
-    setIsLoading(true);
   };
 
   if (status === FETCH_STATUS.loading) {

@@ -1,22 +1,43 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { Suspense, useContext } from "react";
+import { Link, Navigate, Outlet } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 const TasksPage = () => {
+  const { isAuth } = useContext(AuthContext);
+  if (!isAuth) {
+    return <Navigate to="/" />;
+  }
   return (
     <>
-      <nav className="d-flex flex-row">
-        <NavLink className={({ isActive }) => (isActive ? 'btn btn-primary m-2' : 'btn btn-light m-2')} to="counter">
-          CounterPage
-        </NavLink>
-        <NavLink className={({ isActive }) => (isActive ? 'btn btn-primary m-2' : 'btn btn-light m-2')} to="skills">
-          SkillsPage
-        </NavLink>
-        <NavLink className={({ isActive }) => (isActive ? 'btn btn-primary m-2' : 'btn btn-light m-2')} to="banner">
-          BannerPage
-        </NavLink>
-      </nav>
-      <section>
+      <ul className="nav nav-tabs">
+        <li className="nav-item">
+          <Link
+            className="nav-link active"
+            aria-current="page"
+            to="/tasks/banner"
+          >
+            Banner
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/tasks/counter">
+            Counter
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/tasks/filmoteka">
+            Filmoteka
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/tasks/users">
+            Users
+          </Link>
+        </li>
+      </ul>
+      <Suspense fallback={<p>Loading tasks...</p>}>
         <Outlet />
-      </section>
+      </Suspense>
     </>
   );
 };
