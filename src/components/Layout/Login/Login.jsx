@@ -4,7 +4,7 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
-import { loginAction } from "../../../redux/auth/auth.actions";
+import { loginAction } from "../../../redux/auth/auth-slice";
 import { Button } from "../../Button/Button";
 import { confetti } from "../../Service/Confetti";
 

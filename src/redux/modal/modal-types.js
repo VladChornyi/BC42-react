@@ -1,3 +1,3 @@
-export const MODAL_CLOSE = "modalClose";
-export const MODAL_OPEN = "modalOpen";
-export const MODAL_TOGGLE = "modalToggle";
+export const MODAL_CLOSE = "modal/close";
+export const MODAL_OPEN = "modal/open";
+export const MODAL_TOGGLE = "modal/toggle";

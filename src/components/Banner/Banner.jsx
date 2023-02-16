@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   closeModalAction,
   toggleModalAction,
-} from "../../redux/modal/modal-actions";
+} from "../../redux/modal/modal-slice";
 
 import { Modal } from "../Modal";
 import { Timer } from "../Timer/Timer";

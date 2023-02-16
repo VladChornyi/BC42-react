@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   incrementAction,
   decrementAction,
-} from "../../redux/counter/counter-actions";
+} from "../../redux/counter/counter-slice";
 import { DECREMENT, INCREMENT } from "../../redux/counter/action-types";
+import { selectCounter } from "../../redux/counter/counter-selector";
 
 const mobilePhones = [
   { title: "iPhone", name: "iphone" },
@@ -15,7 +16,7 @@ export const Counter = () => {
   const dispatch = useDispatch();
   const [ios, setIos] = useState(0);
   const [android, setAndroid] = useState(0);
-  const selectCounter = useSelector((state) => state.counter);
+  const counter = useSelector(selectCounter);
 
   const handleVotePhone = (e) => {
     const { name } = e.target;
@@ -31,8 +32,12 @@ export const Counter = () => {
     }
   };
 
+  const handleIncrement = () => {
+    dispatch(incrementAction(1));
+  };
+
   const handleDecrement = () => {
-    if (selectCounter > 0) {
+    if (counter > 0) {
       dispatch(decrementAction(1));
     }
   };
@@ -41,7 +46,7 @@ export const Counter = () => {
     <div className="mb-5 p-5 text-white bg-dark rounded-3">
       <h2 className="text-center">Counter</h2>
       <p className="text-center my-5" style={{ fontSize: 80 }}>
-        Count: {selectCounter}
+        Count: {counter}
       </p>
       <p className="text-center my-5" style={{ fontSize: 80 }}>
         IOS: {ios}
@@ -53,9 +58,7 @@ export const Counter = () => {
       <div className="d-flex align-items-center justify-content-center w-100">
         <button
           name="counter"
-          onClick={() => {
-            dispatch(incrementAction(5));
-          }}
+          onClick={handleIncrement}
           className="btn p-3 btn-outline-light w-25 mx-2"
           type="button"
         >
@@ -63,7 +66,7 @@ export const Counter = () => {
         </button>
         <button
           name="counter"
-          disabled={selectCounter === 0}
+          disabled={counter === 0}
           onClick={handleDecrement}
           className="btn p-3 btn-outline-light w-25 mx-2"
           type="button"

@@ -1,6 +1,6 @@
 import { PropTypes } from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
-import { openModalAction } from "../../redux/modal/modal-actions";
+import { useDispatch } from "react-redux";
+import { openModalAction } from "../../redux/modal/modal-slice";
 
 export const BannerItem = ({ title, text, children }) => {
   const dispatch = useDispatch();

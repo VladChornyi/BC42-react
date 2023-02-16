@@ -2,7 +2,9 @@ import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
-import { logoutAction } from "../../../redux/auth/auth.actions";
+import { logoutActionCustom } from "../../../redux/auth/auth-actions";
+import { selectIsAuth } from "../../../redux/auth/auth-selector";
+import { logoutAction } from "../../../redux/auth/auth-slice";
 import { Button } from "../../Button/Button";
 import { Login } from "../Login";
 import css from "./Sidebar.module.css";
@@ -11,10 +13,10 @@ import { NavLinkStyled } from "./Sidebar.styled";
 export const Sidebar = () => {
   // const { isAuth, logout } = useContext(AuthContext);
   const dispatch = useDispatch();
-  const selectIsAuth = useSelector((state) => state.auth.isAuth);
+  const isAuth = useSelector(selectIsAuth);
   const location = useLocation();
   const handleLogout = () => {
-    dispatch(logoutAction());
+    dispatch(logoutActionCustom());
   };
   return (
     <aside
@@ -69,7 +71,7 @@ export const Sidebar = () => {
         >
           Login
         </NavLink>
-        {selectIsAuth && <Button onClick={handleLogout}>Logout</Button>}
+        {isAuth && <Button onClick={handleLogout}>Logout</Button>}
       </div>
     </aside>
   );
