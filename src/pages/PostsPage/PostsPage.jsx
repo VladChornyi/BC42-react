@@ -16,7 +16,6 @@ import { useLocation, useSearchParams } from "react-router-dom";
 
 export const PostsPage = () => {
   const location = useLocation();
-  console.log(location);
   const [params] = useSearchParams();
   const search = params.get("search");
 

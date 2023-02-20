@@ -5,6 +5,7 @@ import storage from "redux-persist/lib/storage";
 import { modalReducer } from "./modal/modal-slice";
 import { persistReducer } from "redux-persist";
 import { filmotekaReducer } from "./filmoteka/filmoteka-slice";
+import { usersReducer } from "./users/users-slice";
 
 const persistAuthConfig = {
   key: "auth",
@@ -16,4 +17,5 @@ export const rootReducer = combineReducers({
   auth: persistedAuthReducer,
   isOpenModal: modalReducer,
   filmoteka: filmotekaReducer,
+  users: usersReducer,
 });
