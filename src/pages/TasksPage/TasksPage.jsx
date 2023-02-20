@@ -1,9 +1,12 @@
 import { Suspense, useContext } from "react";
+import { useSelector } from "react-redux";
 import { Link, Navigate, Outlet } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { selectIsAuth } from "../../redux/auth/auth-selector";
 
 const TasksPage = () => {
-  const { isAuth } = useContext(AuthContext);
+  // const { isAuth } = useContext(AuthContext);
+  const isAuth = useSelector(selectIsAuth);
   if (!isAuth) {
     return <Navigate to="/" />;
   }

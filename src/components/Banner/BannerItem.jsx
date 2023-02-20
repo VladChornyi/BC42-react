@@ -1,6 +1,14 @@
 import { PropTypes } from "prop-types";
+import { useDispatch } from "react-redux";
+import { openModalAction } from "../../redux/modal/modal-slice";
 
-export const BannerItem = ({ title, text, children, onOpenModal }) => {
+export const BannerItem = ({ title, text, children }) => {
+  const dispatch = useDispatch();
+
+  const handleOpenModal = () => {
+    dispatch(openModalAction());
+  };
+
   return (
     <div className="feature col">
       <div
@@ -15,7 +23,11 @@ export const BannerItem = ({ title, text, children, onOpenModal }) => {
         <p>{text}</p>
       </div>
 
-      <button type="button" className="btn btn-primary" onClick={onOpenModal}>
+      <button
+        type="button"
+        className="btn btn-primary"
+        onClick={handleOpenModal}
+      >
         Open modal
       </button>
     </div>

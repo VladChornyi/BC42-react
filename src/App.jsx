@@ -1,15 +1,13 @@
 // import { Banner } from "./components/Banner/Banner";
-import { lazy, Suspense } from "react";
+import { lazy } from "react";
+import { Navigate, Route, Routes } from "react-router";
+
+import { AuthProvider } from "./context/AuthContext";
 import { Counter } from "./components/Counter/Counter";
 import Filmoteka from "./components/Filmoteka/Filmoteka";
-import { Header, Layout } from "./components/Layout";
-import { Memo } from "./components/Memo/Memo";
-// import { Rerender } from "./components/Rerender/Rerender";
-import { AuthProvider } from "./context/AuthContext";
-import { ThemeProvider } from "./context/ThemeContext";
-import { UsersList, UsersPage } from "./pages/UsersPage/UsersPage";
+import { Layout } from "./components/Layout";
+import { UsersPage } from "./pages/UsersPage/UsersPage";
 import SinglePostPage from "./pages/SinglePostPage/SinglePostPage";
-import { Navigate, Route, Routes } from "react-router";
 import TasksPage from "./pages/TasksPage/TasksPage";
 import SingleUserPage from "./pages/SingleUserPage/SingleUserPage";
 import { Login } from "./components/Layout/Login";

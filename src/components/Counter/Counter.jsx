@@ -1,4 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  incrementAction,
+  decrementAction,
+} from "../../redux/counter/counter-slice";
+import { DECREMENT, INCREMENT } from "../../redux/counter/action-types";
+import { selectCounter } from "../../redux/counter/counter-selector";
 
 const mobilePhones = [
   { title: "iPhone", name: "iphone" },
@@ -6,36 +13,10 @@ const mobilePhones = [
 ];
 
 export const Counter = () => {
-  const [counter, setCounter] = useState(1);
+  const dispatch = useDispatch();
   const [ios, setIos] = useState(0);
   const [android, setAndroid] = useState(0);
-
-  // const getResult = () => {
-  //   console.log("calculate");
-  //   let result = 0;
-  //   for (let i = 0; i < 100000000; i++) {
-  //     result += 1;
-  //   }
-  //   return result;
-  // };
-
-  const result = useMemo(() => {
-    console.log("calculate");
-    let result = 0;
-    for (let i = 0; i < 200000000; i++) {
-      result += counter;
-    }
-    return result;
-  }, [counter]);
-
-  const getResult = () => {
-    console.log("calculate");
-    let result = 0;
-    for (let i = 0; i < 200000000; i++) {
-      result += counter;
-    }
-    return result;
-  };
+  const counter = useSelector(selectCounter);
 
   const handleVotePhone = (e) => {
     const { name } = e.target;
@@ -51,18 +32,21 @@ export const Counter = () => {
     }
   };
 
-  // handleVoteAndroid = () => {
-  //   this.setState((prevState) => ({ android: prevState.android + 1 }));
-  // };
-  // handleVoteIOS = () => {
-  //   this.setState((prevState) => ({ ios: prevState.ios + 1 }));
-  // };
+  const handleIncrement = () => {
+    dispatch(incrementAction(1));
+  };
+
+  const handleDecrement = () => {
+    if (counter > 0) {
+      dispatch(decrementAction(1));
+    }
+  };
 
   return (
     <div className="mb-5 p-5 text-white bg-dark rounded-3">
       <h2 className="text-center">Counter</h2>
       <p className="text-center my-5" style={{ fontSize: 80 }}>
-        Count: {result}
+        Count: {counter}
       </p>
       <p className="text-center my-5" style={{ fontSize: 80 }}>
         IOS: {ios}
@@ -74,13 +58,20 @@ export const Counter = () => {
       <div className="d-flex align-items-center justify-content-center w-100">
         <button
           name="counter"
-          onClick={() => {
-            setCounter((prev) => prev + 1);
-          }}
+          onClick={handleIncrement}
           className="btn p-3 btn-outline-light w-25 mx-2"
           type="button"
         >
-          +1
+          +5
+        </button>
+        <button
+          name="counter"
+          disabled={counter === 0}
+          onClick={handleDecrement}
+          className="btn p-3 btn-outline-light w-25 mx-2"
+          type="button"
+        >
+          -1
         </button>
         <button
           name="ios"
