@@ -5,6 +5,12 @@ import { AuthContext } from "../../context/AuthContext";
 import { getLocalData } from "../../helpers/getLocalData";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { selectIsAuth } from "../../redux/auth/auth-selector";
+import { incrementAction } from "../../redux/counter/counter-slice";
+import {
+  selectFilmoteka,
+  selectFilteredFilms,
+  selectGenre,
+} from "../../redux/filmoteka/filmoteka-selector";
 import {
   addFilmAction,
   changeGenreAction,
@@ -15,20 +21,16 @@ import FilmList from "../FilmList/FilmList";
 import GenresSelect from "../GenresSelect/GenresSelect";
 import MovieForm from "../MovieForm/MovieForm";
 
-const LOCAL_FILMS_KEY = "filmListKey";
-
 const Filmoteka = () => {
-  // const { isAuth, login, logout } = useContext(AuthContext);
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
-  // const [filmList, setFilmList] = useLocalStorage(LOCAL_FILMS_KEY, []);
-  const selectFilmList = useSelector((state) => state.filmoteka.filmList);
-  const selectGenre = useSelector((state) => state.filmoteka.genre);
-  // const [genre, setGenre] = useState("All");
+  const filmList = useSelector(selectFilmoteka);
+  const genre = useSelector(selectGenre);
+  const filteredFilms = useSelector(selectFilteredFilms);
 
   const handleAddFilm = (newFilm) => {
     if (
-      selectFilmList.some(
+      filmList.some(
         (film) =>
           film.filmName.toLowerCase().trim() ===
           newFilm.filmName.toLowerCase().trim()
@@ -48,30 +50,24 @@ const Filmoteka = () => {
   const handleChangeGenre = (event) => {
     const { value } = event.target;
     dispatch(changeGenreAction(value));
-    // setGenre(value);
-  };
 
-  const handleFilterFilms = () => {
-    const result = selectFilmList.filter((item) => {
-      return selectGenre === "All" ? item : item.genre === selectGenre;
-    });
-    return result;
+    // setGenre(value);
   };
 
   return (
     <div>
+      <Button
+        onClick={() => {
+          dispatch(incrementAction());
+        }}
+      >
+        Count
+      </Button>
       <h2>Filmoteka </h2>
       {isAuth && <MovieForm onAddFilm={handleAddFilm} />}
 
-      <GenresSelect
-        onChange={handleChangeGenre}
-        genre={selectGenre}
-        list={genres}
-      />
-      <FilmList
-        filmList={handleFilterFilms()}
-        onDeleteFilm={handleDeleteFilm}
-      />
+      <GenresSelect onChange={handleChangeGenre} genre={genre} list={genres} />
+      <FilmList filmList={filteredFilms} onDeleteFilm={handleDeleteFilm} />
     </div>
   );
 };
