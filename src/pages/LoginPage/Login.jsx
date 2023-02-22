@@ -1,30 +1,22 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { useDispatch } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../../context/AuthContext";
-import { loginAction } from "../../../redux/auth/auth-slice";
-import { Button } from "../../Button/Button";
-import { confetti } from "../../Service/Confetti";
+import { Button } from "../../components/Button/Button";
+import { loginThunk, refreshUserThunk } from "../../redux/auth/auth-thunk";
 
-export const Login = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
+export const LoginPage = () => {
   const dispatch = useDispatch();
-  // const { login } = useContext(AuthContext);
-
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [isPassword, setIsPassword] = useState(true);
   const toggle = () => setIsPassword((prev) => !prev);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     switch (name) {
-      case "username":
-        setUsername(value);
+      case "email":
+        setEmail(value);
         break;
 
       case "password":
@@ -38,25 +30,23 @@ export const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (password === "123") {
-      dispatch(loginAction(username));
-      // login(username, password);
-      navigate(location.state?.from ?? "/");
-    }
+    dispatch(loginThunk({ email, password }))
+      .unwrap()
+      .then(() => dispatch(refreshUserThunk()));
   };
 
   return (
-    <form active="#" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <h2>Hello</h2>
 
       <div className="input-group mb-3">
         <input
-          value={username}
+          value={email}
           onChange={handleChange}
-          type="text"
-          name="username"
+          type="email"
+          name="email"
           className="form-control"
-          placeholder="Username"
+          placeholder="Email"
         />
       </div>
 

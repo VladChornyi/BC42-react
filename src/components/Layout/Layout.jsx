@@ -2,11 +2,10 @@ import { PropTypes } from "prop-types";
 import { Suspense } from "react";
 import { Outlet } from "react-router";
 import { ConfettiContainer } from "../Service";
-import { Login } from "./Login";
 
 import { Sidebar } from "./Sidebar/Sidebar";
 
-export const Layout = ({ children }) => {
+export const Layout = () => {
   return (
     <div className="d-flex h-100">
       <Sidebar />
@@ -23,7 +22,6 @@ export const Layout = ({ children }) => {
       </main>
 
       <ConfettiContainer />
-      {/* <EasterEgg /> */}
     </div>
   );
 };

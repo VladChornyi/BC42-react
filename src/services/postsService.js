@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const postsService = axios.create({
-  baseURL: "http://70.34.201.18:8080/posts/",
+  baseURL: "http://70.34.201.18:4444/posts/",
   params: {
     limit: 6,
   },
