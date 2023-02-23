@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { Button } from "../../components/Button/Button";
 import { loginThunk, refreshUserThunk } from "../../redux/auth/auth-thunk";
 
@@ -36,36 +37,39 @@ export const LoginPage = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Hello</h2>
+    <>
+      <form onSubmit={handleSubmit}>
+        <h2>Hello</h2>
 
-      <div className="input-group mb-3">
-        <input
-          value={email}
-          onChange={handleChange}
-          type="email"
-          name="email"
-          className="form-control"
-          placeholder="Email"
-        />
-      </div>
+        <div className="input-group mb-3">
+          <input
+            value={email}
+            onChange={handleChange}
+            type="email"
+            name="email"
+            className="form-control"
+            placeholder="Email"
+          />
+        </div>
 
-      <div className="input-group mb-3">
-        <input
-          value={password}
-          onChange={handleChange}
-          name="password"
-          type={isPassword ? "password" : "text"}
-          className="form-control"
-          placeholder="Password ..."
-        />
+        <div className="input-group mb-3">
+          <input
+            value={password}
+            onChange={handleChange}
+            name="password"
+            type={isPassword ? "password" : "text"}
+            className="form-control"
+            placeholder="Password ..."
+          />
 
-        <Button className="btn-outline-secondary" onClick={toggle}>
-          {isPassword ? <IoEyeOutline /> : <IoEyeOffOutline />}
-        </Button>
-      </div>
+          <Button className="btn-outline-secondary" onClick={toggle}>
+            {isPassword ? <IoEyeOutline /> : <IoEyeOffOutline />}
+          </Button>
+        </div>
 
-      <Button type="submit">Log In</Button>
-    </form>
+        <Button type="submit">Log In</Button>
+      </form>
+      <Link to="/join">Don't have an account? Join</Link>
+    </>
   );
 };

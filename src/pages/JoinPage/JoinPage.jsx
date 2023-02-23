@@ -54,7 +54,6 @@ export const JoinPage = () => {
         setPassword("");
         setFirstname("");
         setLastname("");
-        navigate("/login");
       })
       .catch(console.log);
   };

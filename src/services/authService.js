@@ -2,10 +2,10 @@ import { privateAPI, publicAPI } from "../http/http";
 
 export const token = {
   set: (token) => {
-    privateAPI.defaults.headers.Authorization = `Bearer ${token}`;
+    privateAPI.defaults.headers.common.Authorization = `Bearer ${token}`;
   },
   unSet: () => {
-    privateAPI.defaults.headers.Authorization = "";
+    privateAPI.defaults.headers.common.Authorization = "";
   },
 };
 

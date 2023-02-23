@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
-import { selectUser } from "../../../redux/auth/auth-selector";
+import { selectToken, selectUser } from "../../../redux/auth/auth-selector";
 import { logOutAction } from "../../../redux/auth/auth-slice";
-import { refreshUserThunk } from "../../../redux/auth/auth-thunk";
-import { token } from "../../../services/authService";
 import { Button } from "../../Button";
 
 export const Sidebar = () => {
   const dispatch = useDispatch();
+  const token = useSelector(selectToken);
   const user = useSelector(selectUser);
   const location = useLocation();
   const logOut = () => {
@@ -28,7 +27,7 @@ export const Sidebar = () => {
           height: "max-content",
         }}
       >
-        {user && (
+        {token && (
           <>
             <p>Hello : {user?.first_name}</p>
             <Button onClick={logOut}>logout</Button>
@@ -44,6 +43,18 @@ export const Sidebar = () => {
         >
           Home
         </NavLink>
+        {token && (
+          <NavLink
+            to="/skills"
+            state={{ from: location }}
+            style={{ textAlign: "left" }}
+            className={({ isActive }) =>
+              isActive ? "btn btn-primary" : "btn btn-light"
+            }
+          >
+            Skills
+          </NavLink>
+        )}
         <NavLink
           to="/posts"
           className={({ isActive }) =>
@@ -53,28 +64,32 @@ export const Sidebar = () => {
         >
           Posts
         </NavLink>
-        <NavLink
-          to="/login"
-          replace
-          state={{ from: location }}
-          style={{ textAlign: "left" }}
-          className={({ isActive }) =>
-            isActive ? "btn btn-primary" : "btn btn-light"
-          }
-        >
-          Login
-        </NavLink>
-        <NavLink
-          to="/join"
-          replace
-          state={{ from: location }}
-          style={{ textAlign: "left" }}
-          className={({ isActive }) =>
-            isActive ? "btn btn-primary" : "btn btn-light"
-          }
-        >
-          Join
-        </NavLink>
+        {!token && (
+          <>
+            <NavLink
+              to="/login"
+              replace
+              state={{ from: location }}
+              style={{ textAlign: "left" }}
+              className={({ isActive }) =>
+                isActive ? "btn btn-primary" : "btn btn-light"
+              }
+            >
+              Login
+            </NavLink>
+            <NavLink
+              to="/join"
+              replace
+              state={{ from: location }}
+              style={{ textAlign: "left" }}
+              className={({ isActive }) =>
+                isActive ? "btn btn-primary" : "btn btn-light"
+              }
+            >
+              Join
+            </NavLink>
+          </>
+        )}
       </div>
     </aside>
   );

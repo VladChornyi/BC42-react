@@ -1,17 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { privateAPI } from "../../http/http";
 import {
   logInService,
   refreshUserService,
   signUpService,
   token,
 } from "../../services/authService";
+import { omit } from "lodash";
 
 export const signUpThunk = createAsyncThunk(
   "auth/signUp",
-  async (credentials, { rejectWithValue }) => {
+  async (credentials, { rejectWithValue, dispatch }) => {
     try {
       const data = await signUpService(credentials);
+      dispatch(loginThunk(omit(credentials, ["first_name", "last_name"])));
       return data;
     } catch (error) {
       return rejectWithValue(error.message);

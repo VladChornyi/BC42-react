@@ -1,15 +1,13 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { Button } from "../../components/Button";
-import { AuthContext } from "../../context/AuthContext";
-import { selectIsAuth } from "../../redux/auth/auth-selector";
+import { selectToken } from "../../redux/auth/auth-selector";
+
 import { getSinglePost } from "../../services/postsService";
 
-// const images = [{ id: "1", image: "/..." }];
 const SinglePostPage = () => {
-  // const { isAuth } = useContext(AuthContext);
-  const isAuth = useSelector(selectIsAuth);
+  const token = useSelector(selectToken);
   const [postData, setPostdata] = useState(null);
   const params = useParams();
 
@@ -27,7 +25,7 @@ const SinglePostPage = () => {
           <img style={{ maxWidth: "100%" }} src={postData.image} alt="post" />
           <h2>{postData.title}</h2>
           <p>{postData.content}</p>
-          {isAuth && <Button>Add comment</Button>}
+          {token && <Button>Add comment</Button>}
         </>
       )}
     </section>
